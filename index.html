@@ -3,31 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Science+Gothic:wght@100..900&display=swap" rel="stylesheet">
-    <title>School Attendnce System</title>
+    <title>School Attendance System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Science Gothic", sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 30px;
+        }
+        
+        h2 {
+            text-align: center;
+            font-family: "Dancing Script", cursive;
+            font-size: 2.8rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .input_container {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #3498db;
+        }
+        
+        .student_form {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .student_form div {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+        
+        input, select {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: "Science Gothic", sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: "Science Gothic", sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            grid-column: 1 / -1;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        #errorP {
+            color: #e74c3c;
+            font-weight: 600;
+            margin-top: 15px;
+            text-align: center;
+            min-height: 24px;
+            padding: 5px;
+        }
+        
+        .records {
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background-color: #2c3e50;
+            color: white;
+            text-align: left;
+            padding: 15px;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tbody tr:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .present {
+            color: #27ae60;
+            font-weight: 600;
+        }
+        
+        .absent {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: "Science Gothic", sans-serif;
+            font-weight: 600;
+            transition: all 0.2s;
+            margin-right: 5px;
+        }
+        
+        .edit-btn {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        .edit-btn:hover {
+            background-color: #d68910;
+        }
+        
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .attendance-btn {
+            background-color: #2ecc71;
+            color: white;
+            padding: 6px 10px;
+            font-size: 0.85rem;
+        }
+        
+        .attendance-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            border-top: 4px solid;
+        }
+        
+        .stat-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .stat-card .count {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .total-students {
+            border-color: #3498db;
+        }
+        
+        .present-count {
+            border-color: #2ecc71;
+        }
+        
+        .absent-count {
+            border-color: #e74c3c;
+        }
+        
+        .attendance-rate {
+            border-color: #f39c12;
+        }
+        
+        @media (max-width: 768px) {
+            .student_form {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+                font-size: 0.9rem;
+            }
+            
+            .stat-card {
+                min-width: 150px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-container {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                display: block;
+                margin-bottom: 5px;
+                width: 100%;
+            }
+        }
+        
+        .empty-table {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
-    <!--
-        Input student details
-            studentId
-            StudentDateOfBirth
-            StudentGender
-            StudentPhoneNo
-            StudentEmail
-            Studentname
-            StudentAddress
-            StudentCourseOfStudy
-            StudentDepartment
-        Populate student details
-        Mark student present/absent
-        View student attendance report
-    -->
     <div class="container">
         <h2>Aptech Attendance System</h2>
-
+        
+        <div class="stats-container">
+            <div class="stat-card total-students">
+                <h3>Total Students</h3>
+                <div class="count" id="totalStudents"></div>
+            </div>
+            <div class="stat-card present-count">
+                <h3>Present Today</h3>
+                <div class="count" id="presentCount"></div>
+            </div>
+            <div class="stat-card absent-count">
+                <h3>Absent Today</h3>
+                <div class="count" id="absentCount"></div>
+            </div>
+        </div>
+        
         <div class="input_container">
             <form id="studentForm" class="student_form">
                 <div>
@@ -52,12 +339,12 @@
                 </div>
                 <div>
                     <label for="studentPhoneNo">Student Phone No</label>
-                    <input type="number" id="studentPhoneNo" placeholder="Student Phone Number" />
+                    <input type="tel" id="studentPhoneNo" placeholder="Student Phone Number" />
                 </div>
                 <div>
                     <label for="studentGender">Gender</label>
                     <select id="studentGender">
-                        <option value="">Gender</option>
+                        <option value="">Select Gender</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                     </select>
@@ -65,7 +352,7 @@
                 <div>
                     <label for="studentAttendance">Attendance</label>
                     <select id="studentAttendance">
-                        <option value="">Student Attendance</option>
+                        <option value="">Select Attendance</option>
                         <option value="present">Present</option>
                         <option value="absent">Absent</option>
                     </select>
@@ -92,20 +379,16 @@
                         <th>Student Phone No</th>
                         <th>Student Gender</th>
                         <th>Student Address</th>
-                        <th>Student Attendance Status</th>
+                        <th>Attendance Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="display"></tbody>
+                <tbody id="display">
+                    <!-- Student records will be inserted here dynamically -->
+                </tbody>
             </table>
         </div>
     </div>
-
-
-
-
-
-
 
 
     <script src="script.js"></script>

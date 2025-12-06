@@ -11,6 +11,9 @@ const studentGender = document.getElementById("studentGender")
 const attendance = document.getElementById("studentAttendance")
 const studentAddress = document.getElementById("studentAddress")
 const errorP = document.getElementById('errorP')
+const totalStudents = document.getElementById("totalStudents")
+const presentCount = document.getElementById("presentCount")
+const absentCount = document.getElementById("absentCount")
 
 let studentAttendance = JSON.parse(localStorage.getItem("attendance")) || []
 
@@ -50,15 +53,14 @@ studentForm.addEventListener("submit", (e) => {
     studentsDisplay.innerHTML = ''
     storeData()
     displayInfo()
+    studentStats()
     studentForm.reset()
 })
 
 
 
 const displayInfo = ()=> {
-    const data = JSON.parse(localStorage.getItem('attendance'))
-    console.log(data);
-    
+    const data = JSON.parse(localStorage.getItem('attendance'))    
     
     
     data.sort((a,b) => b-a).forEach(item => {
@@ -99,10 +101,32 @@ const deleteInfo = (studentId)=>{
         localStorage.setItem("attendance", JSON.stringify(find));
         studentsDisplay.innerHTML = ''
         displayInfo()
+        studentStats()
     }
 }
 
+function studentStats(){
+    totalStudents.textContent = studentAttendance.length
 
+    let countP = 0;
+    let countA = 0;
+
+    studentAttendance.forEach((item) => {
+        if(item.studentAttendance.includes("present")){
+            countP += 1
+        }else if(item.studentAttendance.includes("absent")){
+            countA += 1            
+        }
+        
+    })
+
+    presentCount.textContent = countP          
+    absentCount.textContent = countA
+    
+    // studentAttendance
+}
+
+studentStats()
 
 
 

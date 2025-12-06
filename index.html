@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Science+Gothic:wght@100..900&display=swap" rel="stylesheet">
+    <title>School Attendnce System</title>
+</head>
+<body>
+    <!--
+        Input student details
+            studentId
+            StudentDateOfBirth
+            StudentGender
+            StudentPhoneNo
+            StudentEmail
+            Studentname
+            StudentAddress
+            StudentCourseOfStudy
+            StudentDepartment
+        Populate student details
+        Mark student present/absent
+        View student attendance report
+    -->
+    <div class="container">
+        <h2>Aptech Attendance System</h2>
+
+        <div class="input_container">
+            <form id="studentForm" class="student_form">
+                <div>
+                    <label for="studentId">Student ID</label>
+                    <input type="text" id="studentId" placeholder="Student ID" />
+                </div>
+                <div>
+                    <label for="studentName">Student Name</label>
+                    <input type="text" id="studentName" placeholder="Student Name" />
+                </div>
+                <div>
+                    <label for="studentDepartment">Student Department</label>
+                    <input type="text" id="studentDepartment" placeholder="Student Department" />
+                </div>
+                <div>
+                    <label for="studentCourseOfStudy">Student Course Of Study</label>
+                    <input type="text" id="studentCourseOfStudy" placeholder="Student Course Of Study" />
+                </div>
+                <div>
+                    <label for="studentEmail">Student Email</label>
+                    <input type="email" id="studentEmail" placeholder="Student Email" />
+                </div>
+                <div>
+                    <label for="studentPhoneNo">Student Phone No</label>
+                    <input type="number" id="studentPhoneNo" placeholder="Student Phone Number" />
+                </div>
+                <div>
+                    <label for="studentGender">Gender</label>
+                    <select id="studentGender">
+                        <option value="">Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="studentAttendance">Attendance</label>
+                    <select id="studentAttendance">
+                        <option value="">Student Attendance</option>
+                        <option value="present">Present</option>
+                        <option value="absent">Absent</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="studentAddress"> Student Address</label>
+                    <input type="text" id="studentAddress" placeholder="Student Address" />
+                </div>
+                
+                <button type="submit" class="btn">Mark Attendance</button>
+            </form>
+            <p id="errorP"></p>
+        </div>
+
+        <div class="records">
+            <table id="studentsTable">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Student Name</th>
+                        <th>Student Department</th>
+                        <th>Student C.O.S</th>
+                        <th>Student Email</th>
+                        <th>Student Phone No</th>
+                        <th>Student Gender</th>
+                        <th>Student Address</th>
+                        <th>Student Attendance Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="display"></tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>

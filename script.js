@@ -59,36 +59,39 @@ studentForm.addEventListener("submit", (e) => {
 
 
 
-const displayInfo = ()=> {
-    const data = JSON.parse(localStorage.getItem('attendance'))    
+const displayInfo = ()=> {  
     
-    
-    data.sort((a,b) => b-a).forEach(item => {
-        let tr = document.createElement('tr');
+    if(studentAttendance.length === 0){
+        studentsDisplay.innerHTML = "<p styl='width: 100%;'>No data available</p>"
+    }else{
         
-        tr.innerHTML=`
-            <td>${item.studentID}</td>
-            <td>${item.studentName}</td>
-            <td>${item.studentDepartment}</td>
-            <td>${item.studentCourseOfStudy}</td>
-            <td>${item.studentEmail}</td>
-            <td>${item.studentPhoneNo}</td>
-            <td>${item.studentGender}</td>
-            <td>${item.studentAddress}</td>
-            <td>${item.studentAttendance}</td>
-        `;
+        studentAttendance.sort((a,b) => b-a).forEach(item => {
+            let tr = document.createElement('tr');
+            
+            tr.innerHTML=`
+                <td>${item.studentID}</td>
+                <td>${item.studentName}</td>
+                <td>${item.studentDepartment}</td>
+                <td>${item.studentCourseOfStudy}</td>
+                <td>${item.studentEmail}</td>
+                <td>${item.studentPhoneNo}</td>
+                <td>${item.studentGender}</td>
+                <td>${item.studentAddress}</td>
+                <td>${item.studentAttendance}</td>
+            `;
 
-        let deleteBtn = document.createElement('td')
-        deleteBtn.style.color = 'red';
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.style.cursor = 'pointer'
-        deleteBtn.onclick = () => deleteInfo(item.id)
+            let deleteBtn = document.createElement('td')
+            deleteBtn.style.color = 'red';
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.style.cursor = 'pointer'
+            deleteBtn.onclick = () => deleteInfo(item.id)
 
-        tr.appendChild(deleteBtn)
+            tr.appendChild(deleteBtn)
 
 
-        studentsDisplay.appendChild(tr)
-    });
+            studentsDisplay.appendChild(tr)
+        });
+    }
 }
 
 
@@ -98,7 +101,7 @@ const deleteInfo = (studentId)=>{
     const find = studentAttendance.filter(student => student.id !== studentId);
 
     if(find){
-        localStorage.setItem("attendance", JSON.stringify(find));
+        studentAttendance = find
         studentsDisplay.innerHTML = ''
         displayInfo()
         studentStats()

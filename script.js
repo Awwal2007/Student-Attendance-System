@@ -102,6 +102,7 @@ const deleteInfo = (studentId)=>{
 
     if(find){
         studentAttendance = find
+        storeData()
         studentsDisplay.innerHTML = ''
         displayInfo()
         studentStats()
